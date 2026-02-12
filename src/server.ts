@@ -48,48 +48,8 @@ async function setupWeatherRoute() {
 
   const network: Network = `eip155:${networkChainId}`;
 
-  // Mock Facilitator Client to handle API incompatibility
-  class MockFacilitatorClient extends HTTPFacilitatorClient {
-    async getSupported() {
-       // Return what the library expects, but mapped to what we know the facilitator supports
-       return {
-         kinds: [
-           {
-             x402Version: 2,
-             network: "eip155:324705682" as Network,
-             scheme: "exact"
-           }
-         ],
-         extensions: [],
-         signers: {}
-       };
-    }
-    
-    async verify(paymentPayload: any, paymentRequirements: any) {
-        console.log("[MockFacilitator] Verifying payment (MOCKED)...");
-        // Mock successful verification
-        return {
-          isValid: true,
-          payer: "0xMockPayer",
-          paymentPayload,
-          paymentRequirements
-        };
-    }
-
-    async settle(paymentPayload: any, paymentRequirements: any) {
-        console.log("[MockFacilitator] Settling payment (MOCKED)...");
-        // Mock successful settlement
-        return {
-          success: true,
-          transaction: "0xMockTransactionHash",
-          payer: "0xMockPayer",
-          network: paymentRequirements.network
-        };
-    }
-  }
-
   // Initialize facilitator client
-  const facilitatorClient = new MockFacilitatorClient({ url: facilitatorUrl });
+  const facilitatorClient = new HTTPFacilitatorClient({ url: facilitatorUrl });
   const resourceServer = new x402ResourceServer(facilitatorClient);
   resourceServer.register("eip155:*", new ExactEvmScheme());
 
