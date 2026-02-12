@@ -52,7 +52,11 @@ export class WeatherClient {
     }
 
     // Create wallet from private key
-    const account = privateKeyToAccount(privateKey as `0x${string}`);
+    let key = privateKey;
+    if (!key.startsWith("0x")) {
+        key = `0x${key}`;
+    }
+    const account = privateKeyToAccount(key as `0x${string}`);
 
     // Setup x402 client with EVM scheme
     const evmScheme = new ExactEvmScheme(account);
