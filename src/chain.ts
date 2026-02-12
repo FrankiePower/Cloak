@@ -1,16 +1,16 @@
 import { defineChain } from "viem";
 
 export const skaleChain = defineChain({
-    id: 324705682,
-    name: "SKALE Base Sepolia",
-    nativeCurrency: { decimals: 18, name: "Credits", symbol: "CREDIT" },
+    id: 103698795,
+    name: "BITE V2 Sandbox 2",
+    nativeCurrency: { decimals: 18, name: "sFUEL", symbol: "sFUEL" },
     rpcUrls: {
-        default: { http: ["https://base-sepolia-testnet.skalenodes.com/v1/base-testnet"] },
+        default: { http: ["https://base-sepolia-testnet.skalenodes.com/v1/bite-v2-sandbox"] },
     },
     blockExplorers: {
         default: {
             name: "Blockscout",
-            url: "https://base-sepolia-testnet-explorer.skalenodes.com/"
+            url: "https://base-sepolia-testnet-explorer.skalenodes.com:10032"
         }
     }
 });
