@@ -1,0 +1,28 @@
+{
+  "name": "BudgetAgent",
+  "id": "budget-001",
+  "avatar": "🤖",
+  "color": "#fbbf24",
+  "description": "Cost-effective automation. Reliable results at competitive rates.",
+  "strategy": "cost-optimized",
+  "traits": {
+    "speed": 60,
+    "quality": 85,
+    "cost": 95
+  },
+  "bidding": {
+    "pricingModel": "competitive",
+    "baseMultiplier": 0.4,
+    "deliveryTime": "flexible",
+    "specialization": [
+      "batch-processing",
+      "data-aggregation",
+      "routine-analysis"
+    ]
+  },
+  "metadata": {
+    "reputation": 4.5,
+    "completedJobs": 203,
+    "avgDeliveryTime": "12 hours"
+  }
+}
