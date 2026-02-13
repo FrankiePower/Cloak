@@ -6,3 +6,6 @@ out
 cache
 broadcast
 .DS_Store
+
+# Don't push skale-city until ready
+skale-city/
