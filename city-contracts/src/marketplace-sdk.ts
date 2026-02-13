@@ -8,6 +8,7 @@ import {
   encodeAbiParameters,
   type Hash,
   parseAbiItem,
+  decodeEventLog,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { skaleChain } from "./chain.js";
@@ -180,21 +181,37 @@ export class AgentMarketplaceSDK {
     // Wait for confirmation and get jobId from event
     const receipt = await this.publicClient.waitForTransactionReceipt({ hash });
     
+    console.log(`Debug: Receipt logs: ${receipt.logs.length}`);
+
     // Find JobPosted event
     const jobPostedEvent = receipt.logs.find((log: any) => {
       try {
-        const decoded = this.publicClient.decodeEventLog({
+        const decoded = decodeEventLog({
           abi: MARKETPLACE_ABI,
           data: log.data,
           topics: log.topics,
         });
-        return decoded.eventName === "JobPosted";
-      } catch {
-        return false;
+        if (decoded.eventName === "JobPosted") {
+             console.log("Debug: Found JobPosted event!", decoded);
+             return true;
+        }
+      } catch (e) {
+        console.log("Debug: Failed to decode log", e);
       }
+      return false;
     });
 
-    const jobId = jobPostedEvent ? (jobPostedEvent as any).args.jobId : 1n;
+    if (!jobPostedEvent) {
+        throw new Error("JobPosted event not found in transaction logs!");
+    }
+
+    const decodedLog = decodeEventLog({
+        abi: MARKETPLACE_ABI,
+        data: jobPostedEvent.data,
+        topics: jobPostedEvent.topics,
+    });
+
+    const jobId = (decodedLog as any).args.jobId;
 
     return { jobId, txHash: hash };
   }
