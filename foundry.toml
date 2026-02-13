@@ -1,0 +1,12 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.27"
+evm_version = "istanbul"  # Required for BITE CTX
+
+[rpc_endpoints]
+bite_sandbox = "https://base-sepolia-testnet.skalenodes.com/v1/bite-v2-sandbox"
+
+[etherscan]
+bite_sandbox = { key = "none", url = "https://base-sepolia-testnet-explorer.skalenodes.com:10032/api" }
